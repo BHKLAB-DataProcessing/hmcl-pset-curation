@@ -1,0 +1,35 @@
+# Source candidates only; no downloads or curation are implemented.
+dataset:
+  id: "HMCL"
+  name: "Human Myeloma Cell Line"
+  version: null  # Set after selecting the source releases.
+source_review:
+  status: pending
+  notes: "HCML in the task refers to HMCL. Review the archive contents, mutation provenance and published versus recomputed response metrics before implementation."
+annotationdb:
+  base_url: https://annotationdb.bhklab.ca
+software:
+  github:
+    - package: CoreGx
+      repo: bhklab/CoreGx
+      ref: HEAD
+    - package: PharmacoGx
+      repo: bhklab/PharmacoGx
+      ref: HEAD
+sources:
+  - id: "screen"
+    name: "HMCL drug-screen data package"
+    release: "Zenodo record 14902712; local archive named v4"
+    landing_url: "https://zenodo.org/records/14902712"
+    download_url: null
+    filename: "hmcl-drugscreen-data-package-v4.zip"
+    format: "ZIP containing TSV files"
+    review_status: "pending"
+    note: "Select the exact record asset and checksum during source review; do not assume an unverified direct URL."
+    sha256: null  # Record after source verification.
+parameters:
+  normalization: null
+  fitting: null  # Choose model, metrics and replicate handling after source review.
+outputs:
+  pharmacoset: "data/results/HMCL_PSet.rds"
+  tables: data/results/tables
