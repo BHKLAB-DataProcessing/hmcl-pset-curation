@@ -1,13 +1,11 @@
 # Development decisions
 
-- Decision: scaffold only; review sources before implementing downloads, normalization, fitting or serialization.
-- Decision: separate HMCL, NCI ALMANAC, GDSC Matrix and GDSC Anchor repos. Matrix/Anchor share setup and mapping concepts but have different source schemas and processing. Keep helpers repo-local initially; revisit consolidation once implementation reveals stable overlap.
-- Decision: canonical output is a portable PharmacoSet RDS, with optional TSV exports. Do not embed repository paths, download configs or source documents in public object annotation slots.
-- Decision: install current GitHub CoreGx/PharmacoGx using explicit setup, record resolved SHAs and pin before production. No legacy feature branches or package-description patches are inherited. No package installation has been attempted.
-- Planned harmonization: stable source primary keys; Cellosaurus sample mappings, PubChem compound mappings, and current/pinned GENCODE Ensembl gene IDs when molecular profiles are included. Keep biological attributes in TRE rowData/colData, not repeated in physical assay tables.
-- Planned audits: export compound/cell/gene AnnotationDB mapping misses as TSV with source keys, relevant accessions, `In.AnnotationDB`, `AnnotationGx.Mapped` and `AnnotationGx.Title`. Keep fitting choices and API hosts in versioned config.
-- Scaffold scope: no Copier migration, documentation publishing, release automation, containers, full QC, raw downloads or dataset implementation yet. These are deferred intentionally to keep this source-review template minimal.
+See [processing decisions](implementation.md), [source provenance](data_sources.md) and [validation](validation.md). Dependencies and source checksums are pinned; generated data and diagnostic artifacts remain outside Git.
 
-## Dataset-specific review
+### Molecular assay type annotations
 
-HCML in the task refers to HMCL. Review the archive contents, mutation provenance and published versus recomputed response metrics before implementation.
+Assembly sets each molecular experiment's `metadata$annotation` to its explicit assay type; each assay retains its correct molecular type. This is required by the current MCP `drugSensitivitySig` consumer. Source values and units are unchanged. Proteomics, methylation and heterogeneous DTP experiments retain their true types even though that consumer does not currently support all of them. Use explicit numeric `sProfiles` for combination-response analyses; do not delete descriptive profile fields merely to make a consumer run.
+
+The HMCL monotherapy fit assay is named `profiles`, as required by the standard PharmacoGx profile accessor. Fit-status fields and the complete TSV export remain available. For association consumers, explicitly select the numeric response metric into `sProfiles`, retaining diagnostic fields in the PSet. The subset reassembly check confirms source and fitted values are unchanged.
+
+Package-description installation paths (`file` attributes and `LibPath`) are removed from the public object annotation. Package versions and GitHub revisions remain intact, and full local session/package manifests are retained outside the RDS under `data/procdata/metadata`. QC checks that the serialized annotation is already portable.

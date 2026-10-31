@@ -1,5 +1,9 @@
-# Raw data
+# Raw downloads
 
-Expected after implementation: source downloads listed in `config/pipeline.yaml`, extracted source files, and small manual source metadata under `metadata/`. Generated/downloaded data stay untracked.
+Expected files and inspected size are listed below. Original public bytes live in `downloads/<id>/payload`; each adjacent receipt records URL, inferred filename, byte count and SHA-256. Existing manually downloaded archives and inspection records are preserved.
 
-Approximate sizes from legacy files (not forecasts): Raw archive/extracted data: size to verify; legacy base PSet about 43 MB and fitted variants about 70 MB each.
+| Download path under `downloads/` | Inferred filename | Inspected size |
+|---|---|---:|
+| `screen/payload` | hmcl-drugscreen-data-package-v4.zip | 187.47 MiB |
+| `gencode/payload` | gencode.v50.annotation.gtf.gz | 118.76 MiB |
+| `cellosaurus/payload` | cells.json | 0.07 MiB |

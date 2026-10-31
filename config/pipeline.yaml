@@ -1,35 +1,30 @@
-# Source candidates only; no downloads or curation are implemented.
+---
 dataset:
-  id: "HMCL"
-  name: "Human Myeloma Cell Line"
-  version: null  # Set after selecting the source releases.
-source_review:
-  status: pending
-  notes: "HCML in the task refers to HMCL. Review the archive contents, mutation provenance and published versus recomputed response metrics before implementation."
+  id: HMCL
+  name: Human Myeloma Cell Line
+  version: '2026-10-21'
 annotationdb:
+  mode: live
+  refresh: false
   base_url: https://annotationdb.bhklab.ca
-software:
-  github:
-    - package: CoreGx
-      repo: bhklab/CoreGx
-      ref: HEAD
-    - package: PharmacoGx
-      repo: bhklab/PharmacoGx
-      ref: HEAD
+packages:
+  CoreGx: https://github.com/bhklab/CoreGx/commit/bf6d814abd3dc0fc98f9f419f430cc6473046cb2
+  PharmacoGx: https://github.com/bhklab/PharmacoGx/commit/28c58707eece80086bee75d8ef0e8afae96389ca
 sources:
-  - id: "screen"
-    name: "HMCL drug-screen data package"
-    release: "Zenodo record 14902712; local archive named v4"
-    landing_url: "https://zenodo.org/records/14902712"
-    download_url: null
-    filename: "hmcl-drugscreen-data-package-v4.zip"
-    format: "ZIP containing TSV files"
-    review_status: "pending"
-    note: "Select the exact record asset and checksum during source review; do not assume an unverified direct URL."
-    sha256: null  # Record after source verification.
+- id: screen
+  download_url: https://zenodo.org/records/14902712/files/hmcl-drugscreen-data-package-v4.zip?download=1
+  sha256: 9d65ddfd055f8666750d974091dc3ef8f46405de6ec986e87d0efc8d2021a7c9
+- id: gencode
+  download_url: https://storage.googleapis.com/annotationdb_pipeline_outputs/annotation_assets/gencode.v50.annotation.gtf.gz
+  sha256: 83fba3e9b03f0b8c958f3595c6c350adc55f468abf8b0e47b6d5284cfe13a453
+- id: cellosaurus
+  download_url: https://annotationdb.bhklab.ca/cell_line/all
 parameters:
-  normalization: null
-  fitting: null  # Choose model, metrics and replicate handling after source review.
+  fitting:
+    engine: PharmacoGx_Hill
+    min_points: 3
+    workers: 2
+    chunk_size: 500
 outputs:
-  pharmacoset: "data/results/HMCL_PSet.rds"
+  pharmacoset: data/results/HMCL_PSet.rds
   tables: data/results/tables

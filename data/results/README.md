@@ -1,5 +1,6 @@
-# End-user outputs
+# Results
 
-Expected after implementation: `HMCL_PSet.rds`, `tables/*.tsv`, and optional `tables.tar.gz`. No logs or debugging outputs.
+Expected files: `HMCL_PSet.rds`, `tables/*.tsv`, and optional `tables.tar.gz`.
 
-Approximate legacy sizes: Raw archive/extracted data: size to verify; legacy base PSet about 43 MB and fitted variants about 70 MB each.
+
+The complete object is validated and explored in `docs/pset_qc.html` after assembly. Lightweight integration fixtures are internal tests only.
